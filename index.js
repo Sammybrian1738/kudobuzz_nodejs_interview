@@ -1,6 +1,6 @@
 const logger = require("./utils/logs/logger");
 const initMongoDBConnection = require("./utils/db/mongodb");
-const { insertMultiplePlans } = require("./generators/plan");
+const { generatePlans } = require("./generators/plan");
 
 async function main() {
   try {
@@ -13,7 +13,7 @@ async function main() {
 
     logger.info("Connected to MongoDB Successfully");
 
-    insertMultiplePlans();
+    generatePlans();
   } catch (err) {
     logger.error(err);
     process.exit(1);

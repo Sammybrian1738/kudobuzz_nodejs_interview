@@ -69,27 +69,44 @@ const default_plans = {
   },
 };
 
-async function CreatePlan(plan) {
+async function createPlan(plan) {
   try {
     // validate the plan data
+    const { error } = validatePlan();
+    if (error) {
+      throw error;
+    }
 
+    // create new plan
     const new_plan = new Plan(plan);
 
     await new_plan.save();
   } catch (err) {
-    logger.error(`Failed to save plan ${plan} to DB.`);
+    return err;
   }
 }
 
-function insertMultiplePlans() {
-  const plans = Object.values(default_plans);
+async function generatePlans() {
+  try {
+    // delete previous generated plans
+    await Plan.deleteMany({});
 
-  plans.forEach((plan) => {
-    CreatePlan(plan);
-  });
+    const plans = Object.keys(default_plans);
+
+    plans.forEach(async (plan) => {
+      const err = await createPlan(default_plans[plan]);
+      if (err) {
+        logger.error(`Failed to save ${plan} plan to DB. ${err}`);
+      } else {
+        logger.info(`Successfully saved ${plan} plan to DB`);
+      }
+    });
+  } catch (err) {
+    logger.error(err);
+  }
 }
 
 module.exports = {
-  insertMultiplePlans,
-  CreatePlan,
+  generatePlans,
+  createPlan,
 };
