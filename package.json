@@ -1,0 +1,21 @@
+{
+  "name": "kudobuzz_nodejs_interview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "export NODE_ENV=production && node index.js",
+    "dev": "export NODE_ENV=development && nodemon index.js",
+    "test": "export NODE_ENV=test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^17.11.0",
+    "joi-objectid": "^4.0.2",
+    "mongoose": "^7.6.2",
+    "nodemon": "^3.0.1",
+    "winston": "^3.11.0"
+  }
+}
