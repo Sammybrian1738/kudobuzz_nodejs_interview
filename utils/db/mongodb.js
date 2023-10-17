@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
+const config = require("config");
 
 module.exports = function initMongoDBConnection() {
   return new Promise((resolve, reject) => {
-    mongoose.connect(
-      `mongodb://127.0.0.1:27017/${
-        process.env.NODE_ENV == "test" ? "kudobuzz_test" : "kudobuzz_dev"
-      }?retryWrites=true&w=majority`
-    );
+    mongoose.connect(config.get("MONGO_URI"));
 
     var mongodb = mongoose.connection;
     mongodb.on("error", function (err) {

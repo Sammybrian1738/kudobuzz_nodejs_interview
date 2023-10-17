@@ -1,7 +1,4 @@
-const { Plan, validatePlan } = require("../models/plan");
-const logger = require("../utils/logs/logger");
-
-const default_plans = {
+const plan_seeders = {
   platinum: {
     name: "Platinum",
     price: 100,
@@ -69,44 +66,4 @@ const default_plans = {
   },
 };
 
-async function createPlan(plan) {
-  try {
-    // validate the plan data
-    const { error } = validatePlan();
-    if (error) {
-      throw error;
-    }
-
-    // create new plan
-    const new_plan = new Plan(plan);
-
-    await new_plan.save();
-  } catch (err) {
-    return err;
-  }
-}
-
-async function generatePlans() {
-  try {
-    // delete previous generated plans
-    await Plan.deleteMany({});
-
-    const plans = Object.keys(default_plans);
-
-    plans.forEach(async (plan) => {
-      const err = await createPlan(default_plans[plan]);
-      if (err) {
-        logger.error(`Failed to save ${plan} plan to DB. ${err}`);
-      } else {
-        logger.info(`Successfully saved ${plan} plan to DB`);
-      }
-    });
-  } catch (err) {
-    logger.error(err);
-  }
-}
-
-module.exports = {
-  generatePlans,
-  createPlan,
-};
+module.exports = { plan_seeders };

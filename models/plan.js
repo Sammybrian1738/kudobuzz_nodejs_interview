@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
 
 const featuresSchema = new mongoose.Schema({
   videos: {
@@ -51,29 +50,8 @@ const planSchema = new mongoose.Schema({
   },
 });
 
-function validatePlan(plan) {
-  const featureJoiSchema = Joi.object().keys({
-    videos: Joi.bool().required(),
-    audio: Joi.bool().required(),
-    download: Joi.bool().required(),
-    streaming: Joi.bool().required(),
-    customize: Joi.bool().required(),
-  });
-
-  const planJoiSchema = Joi.object({
-    name: Joi.string().required(),
-    price: Joi.number().required(),
-    period: Joi.string().required(),
-    status: Joi.string().valid("A", "D").max(1).required(),
-    features: featureJoiSchema,
-  });
-
-  return planJoiSchema.validate(plan);
-}
-
 const Plan = mongoose.model("Plan", planSchema);
 
 module.exports = {
   Plan,
-  validatePlan,
 };

@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
-Joi.objectId = require("joi-objectid")(Joi);
 
 const paymentPlatformSchema = new mongoose.Schema({
   token: {
@@ -25,6 +23,12 @@ const subscriptionSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    validate: {
+      validator: function (value) {
+        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+      },
+      message: (props) => `${props.value} is not a valid email!`,
+    },
     required: true,
   },
   plan_id: {
@@ -37,23 +41,6 @@ const subscriptionSchema = new mongoose.Schema({
     required: true,
   },
 });
-
-function validateSubscription(subcription) {
-  const paymentPlatformJoiSchema = Joi.object().keys({
-    token: Joi.string().required(),
-    external_id: Joi.string().required(),
-    name: Joi.string().valid("Stripe", "Paypal").required(),
-  });
-
-  const subscriptionJoischema = Joi.object({
-    business_id: Joi.string().required(),
-    email: Joi.string().email().required(),
-    plan_id: Joi.objectId().required(),
-    payment_platform: paymentPlatformJoiSchema,
-  });
-
-  return subscriptionJoischema.validate(subcription);
-}
 
 const Subscription = mongoose.model("Subscription", subscriptionSchema);
 
