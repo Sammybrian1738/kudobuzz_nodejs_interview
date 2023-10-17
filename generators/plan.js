@@ -1,4 +1,4 @@
-const { Plan } = require("../models/plan");
+const { Plan, validatePlan } = require("../models/plan");
 const logger = require("../utils/logs/logger");
 
 const default_plans = {
@@ -69,16 +69,27 @@ const default_plans = {
   },
 };
 
-module.exports = function insertPlans() {
-  const plans = Object.keys(default_plans);
+async function CreatePlan(plan) {
+  try {
+    // validate the plan data
 
-  plans.forEach(async (plan) => {
-    try {
-      const new_plan = new Plan(plan);
+    const new_plan = new Plan(plan);
 
-      await new_plan.save();
-    } catch (err) {
-      logger.error("Failed to save plan to DB", plan);
-    }
+    await new_plan.save();
+  } catch (err) {
+    logger.error(`Failed to save plan ${plan} to DB.`);
+  }
+}
+
+function insertMultiplePlans() {
+  const plans = Object.values(default_plans);
+
+  plans.forEach((plan) => {
+    CreatePlan(plan);
   });
+}
+
+module.exports = {
+  insertMultiplePlans,
+  CreatePlan,
 };
