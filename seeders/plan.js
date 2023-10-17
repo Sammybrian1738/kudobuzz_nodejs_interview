@@ -16,6 +16,8 @@ async function createPlan(plan) {
 }
 
 async function seedPlans() {
+  var errs_count = 0;
+
   try {
     // delete previous generated plans
     await Plan.deleteMany({});
@@ -26,6 +28,7 @@ async function seedPlans() {
       const err = await createPlan(plan_seeders[plan]);
       if (err) {
         logger.error(`Failed to save ${plan} plan to DB. ${err}`);
+        errs_count++;
       } else {
         logger.info(`Successfully saved ${plan} plan to DB`);
       }
@@ -33,6 +36,8 @@ async function seedPlans() {
   } catch (err) {
     logger.error(err);
   }
+
+  return errs_count;
 }
 
 module.exports = {

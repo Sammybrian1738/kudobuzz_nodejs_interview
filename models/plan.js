@@ -36,7 +36,7 @@ const planSchema = new mongoose.Schema({
   period: {
     type: String,
     required: true,
-    maxlength: 50,
+    maxlength: 10,
   },
   status: {
     type: String,
