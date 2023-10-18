@@ -3,7 +3,7 @@ const assert = require("assert");
 const { generateRandomString } = require("../../utils/general");
 const { seedPlans } = require("../../seeders/plan");
 
-const test_plan = {
+var test_plan = {
   name: "Platinum",
   price: 100,
   period: "monthly",
@@ -35,6 +35,7 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(err.errors["name"].message, "name is required");
             return true;
           }
         );
@@ -49,13 +50,17 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["name"].message,
+              `maximum allowed length for name is 50. Got ${test_plan.name}`
+            );
             return true;
           }
         );
       });
     });
     describe("price validation", () => {
-      it("price should be require", async () => {
+      it("price should be required", async () => {
         delete test_plan.price;
 
         const new_plan = new Plan(test_plan);
@@ -65,6 +70,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["price"].message,
+              "price is required"
+            );
             return true;
           }
         );
@@ -81,6 +90,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["period"].message,
+              "period is required"
+            );
             return true;
           }
         );
@@ -95,6 +108,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["period"].message,
+              `maximum length allowed for period is 10. Got ${test_plan.period}`
+            );
             return true;
           }
         );
@@ -111,6 +128,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["status"].message,
+              "status is required"
+            );
             return true;
           }
         );
@@ -125,6 +146,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["status"].message,
+              `${test_plan.status} is not supported`
+            );
             return true;
           }
         );
@@ -141,6 +166,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["features.videos"].message,
+              "videos is required"
+            );
             return true;
           }
         );
@@ -155,6 +184,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["features.audio"].message,
+              "audio is required"
+            );
             return true;
           }
         );
@@ -169,6 +202,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["features.download"].message,
+              "download is required"
+            );
             return true;
           }
         );
@@ -183,6 +220,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["features.streaming"].message,
+              "streaming is required"
+            );
             return true;
           }
         );
@@ -197,6 +238,10 @@ describe("Plans", () => {
             await new_plan.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["features.customize"].message,
+              "customize is required"
+            );
             return true;
           }
         );
