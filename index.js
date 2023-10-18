@@ -9,6 +9,9 @@ const {
   seedFreeSubscriptions,
 } = require("./seeders/subscription");
 const { eventEmitter } = require("./utils/general");
+const express = require("express");
+const config = require("config");
+const subscription_routes = require("./routes/subscription");
 
 async function main() {
   try {
@@ -41,6 +44,21 @@ async function main() {
 
     eventEmitter.once("seedFreeSubscriptions", () => {
       seedFreeSubscriptions();
+    });
+
+    // express
+    const app = express();
+    app.use(express.json());
+    app.use("/subscriptions", subscription_routes);
+
+    app.get("/", (req, res) => {
+      res.send("Kudobuzz");
+    });
+
+    const port = config.has("PORT") ? config.get("PORT") : 8080;
+
+    app.listen(port, () => {
+      logger.info(`App listening on port ${port}`);
     });
   } catch (err) {
     logger.error("ERROR", err);

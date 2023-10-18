@@ -38,6 +38,8 @@ function generateRandomPaymentPlatformExternalID() {
   return uuidv4();
 }
 
+
+
 module.exports = {
   generateRandomString,
   generateRandomBusinessID,
