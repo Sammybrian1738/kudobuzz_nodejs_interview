@@ -1,13 +1,29 @@
 const { Subscription } = require("../models/subscription");
 const logger = require("../utils/logs/logger");
 const { subscription_seeders } = require("./seeder");
+const {
+  generateRandomBusinessID,
+  generateRandomEmail,
+  generateRandomString,
+  generateRandomPaymentPlatformExternalID,
+  generateRandomPaymentPlatformName,
+} = require("../utils/general");
 
 async function seedPlatinumSubscriptions() {
   var subscriptions = [];
 
   for (var counter = 0; counter < 5000; counter++) {
     try {
-      subscriptions.push(subscription_seeders.platinumSubscription);
+      subscriptions.push({
+        ...subscription_seeders.platinumSubscription,
+        business_id: generateRandomBusinessID(),
+        email: generateRandomEmail(),
+        payment_platform: {
+          token: generateRandomString(40),
+          external_id: generateRandomPaymentPlatformExternalID(),
+          name: generateRandomPaymentPlatformName(),
+        },
+      });
     } catch (err) {
       logger.error(err);
     }
@@ -31,7 +47,16 @@ async function seedGoldSubscriptions() {
 
   for (var counter = 0; counter < 8000; counter++) {
     try {
-      subscriptions.push(subscription_seeders.goldSubscription);
+      subscriptions.push({
+        ...subscription_seeders.goldSubscription,
+        business_id: generateRandomBusinessID(),
+        email: generateRandomEmail(),
+        payment_platform: {
+          token: generateRandomString(40),
+          external_id: generateRandomPaymentPlatformExternalID(),
+          name: generateRandomPaymentPlatformName(),
+        },
+      });
     } catch (err) {
       logger.error(err);
     }
@@ -55,7 +80,16 @@ async function seedSilverSubscriptions() {
 
   for (var counter = 0; counter < 12000; counter++) {
     try {
-      subscriptions.push(subscription_seeders.silverSubscription);
+      subscriptions.push({
+        ...subscription_seeders.silverSubscription,
+        business_id: generateRandomBusinessID(),
+        email: generateRandomEmail(),
+        payment_platform: {
+          token: generateRandomString(40),
+          external_id: generateRandomPaymentPlatformExternalID(),
+          name: generateRandomPaymentPlatformName(),
+        },
+      });
     } catch (err) {
       logger.error(err);
     }
@@ -79,7 +113,16 @@ async function seedBronzeSubscriptions() {
 
   for (var counter = 0; counter < 7000; counter++) {
     try {
-      subscriptions.push(subscription_seeders.bronzeSubscription);
+      subscriptions.push({
+        ...subscription_seeders.bronzeSubscription,
+        business_id: generateRandomBusinessID(),
+        email: generateRandomEmail(),
+        payment_platform: {
+          token: generateRandomString(40),
+          external_id: generateRandomPaymentPlatformExternalID(),
+          name: generateRandomPaymentPlatformName(),
+        },
+      });
     } catch (err) {
       logger.error(err);
     }
@@ -103,7 +146,16 @@ async function seedFreeSubscriptions() {
 
   for (var counter = 0; counter < 500; counter++) {
     try {
-      subscriptions.push(subscription_seeders.freeSubscription);
+      subscriptions.push({
+        ...subscription_seeders.freeSubscription,
+        business_id: generateRandomBusinessID(),
+        email: generateRandomEmail(),
+        payment_platform: {
+          token: generateRandomString(40),
+          external_id: generateRandomPaymentPlatformExternalID(),
+          name: generateRandomPaymentPlatformName(),
+        },
+      });
     } catch (err) {
       logger.error(err);
     }

@@ -1,11 +1,3 @@
-const {
-  generateRandomBusinessID,
-  generateRandomEmail,
-  generateRandomString,
-  generateRandomPaymentPlatformExternalID,
-  generateRandomPaymentPlatformName,
-} = require("../utils/general");
-
 const plan_seeders = {
   platinum: {
     name: "Platinum",
@@ -76,54 +68,19 @@ const plan_seeders = {
 
 const subscription_seeders = {
   platinumSubscription: {
-    business_id: generateRandomBusinessID(),
-    email: generateRandomEmail(),
     plan_id: null,
-    payment_platform: {
-      token: generateRandomString(40),
-      external_id: generateRandomPaymentPlatformExternalID(),
-      name: generateRandomPaymentPlatformName(),
-    },
   },
   goldSubscription: {
-    business_id: generateRandomBusinessID(),
-    email: generateRandomEmail(),
     plan_id: null,
-    payment_platform: {
-      token: generateRandomString(40),
-      external_id: generateRandomPaymentPlatformExternalID(),
-      name: generateRandomPaymentPlatformName(),
-    },
   },
   silverSubscription: {
-    business_id: generateRandomBusinessID(),
-    email: generateRandomEmail(),
     plan_id: null,
-    payment_platform: {
-      token: generateRandomString(40),
-      external_id: generateRandomPaymentPlatformExternalID(),
-      name: generateRandomPaymentPlatformName(),
-    },
   },
   bronzeSubscription: {
-    business_id: generateRandomBusinessID(),
-    email: generateRandomEmail(),
     plan_id: null,
-    payment_platform: {
-      token: generateRandomString(40),
-      external_id: generateRandomPaymentPlatformExternalID(),
-      name: generateRandomPaymentPlatformName(),
-    },
   },
   freeSubscription: {
-    business_id: generateRandomBusinessID(),
-    email: generateRandomEmail(),
     plan_id: null,
-    payment_platform: {
-      token: generateRandomString(40),
-      external_id: generateRandomPaymentPlatformExternalID(),
-      name: generateRandomPaymentPlatformName(),
-    },
   },
 };
 
