@@ -8,6 +8,33 @@ const logger = require("../utils/logs/logger");
 const fs = require("fs");
 const path = require("path");
 
+async function createSubscriptionCsv(subscriptions, fileName) {
+  return new Promise((resolve, reject) => {
+    const csvFile = fs.createWriteStream(fileName);
+    const stream = format({ headers: true });
+    stream.pipe(csvFile);
+
+    for (i = 0; i < subscriptions.length; i++) {
+      stream.write({
+        business_id: subscriptions[i].business_id,
+        email: subscriptions[i].email,
+        plan_id: subscriptions[i].plan_id,
+        payment_platform_name: subscriptions[i].payment_platform.name,
+      });
+    }
+
+    stream.end();
+
+    stream.on("error", function (err) {
+      reject(err);
+    });
+
+    stream.on("end", () => {
+      resolve(true);
+    });
+  });
+}
+
 router.get("/", async (req, res, next) => {
   try {
     // Get subscriptions with plan pricing greater than or equal to $50
@@ -30,21 +57,11 @@ router.get("/", async (req, res, next) => {
       .exec();
 
     const fileName = "subscriptions.csv";
-    const csvFile = fs.createWriteStream(fileName);
-    const stream = format({ headers: true });
-    stream.pipe(csvFile);
 
-    for (i = 0; i < subscriptions.length; i++) {
-      stream.write({
-        business_id: subscriptions[i].business_id,
-        email: subscriptions[i].email,
-        plan_id: subscriptions[i].plan_id,
-        payment_platform_name: subscriptions[i].payment_platform.name,
-      });
-    }
+    await createSubscriptionCsv(subscriptions, fileName);
 
     const options = {
-      root: path.join(__dirname),
+      root: path.join(path.dirname(require.main.filename)),
     };
 
     res.status(200).sendFile(fileName, options, function (err) {
@@ -54,8 +71,6 @@ router.get("/", async (req, res, next) => {
         logger.info(`Successfully sent ${fileName} to client`);
       }
     });
-
-    stream.end();
   } catch (err) {
     logger.error(err);
     res.status(500).send({ err: err });
