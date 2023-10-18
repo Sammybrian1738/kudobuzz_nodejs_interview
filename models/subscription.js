@@ -5,25 +5,31 @@ const allowed_platform_name = ["Stripe", "Paypal"];
 const paymentPlatformSchema = new mongoose.Schema({
   token: {
     type: String,
-    required: true,
-    maxlength: 40,
+    required: [true, "token is required"],
+    maxlength: [40, "maximum length allowed for token is 40. Got {VALUE}"],
   },
   external_id: {
     type: String,
-    required: true,
-    maxlength: 40,
+    required: [true, "external_id is required"],
+    maxlength: [
+      40,
+      "maximum length allowed for external_id is 40. Got {VALUE}",
+    ],
   },
   name: {
     type: String,
-    enum: allowed_platform_name,
-    required: true,
+    enum: {
+      values: allowed_platform_name,
+      message: "{VALUE} is not supported",
+    },
+    required: [true, "name is required"],
   },
 });
 
 const subscriptionSchema = new mongoose.Schema({
   business_id: {
     type: String,
-    required: true,
+    required: [true, "business_id is required"],
   },
   email: {
     type: String,
@@ -33,16 +39,16 @@ const subscriptionSchema = new mongoose.Schema({
       },
       message: (props) => `${props.value} is not a valid email!`,
     },
-    required: true,
+    required: [true, "email is required"],
   },
   plan_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Plan",
-    required: true,
+    required: [true, "plan_id is required"],
   },
   payment_platform: {
     type: paymentPlatformSchema,
-    required: true,
+    required: [true, "payment_platform is required"],
   },
 });
 

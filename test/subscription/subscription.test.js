@@ -41,6 +41,10 @@ describe("Subscriptions", () => {
             await new_subscription.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["business_id"].message,
+              "business_id is required"
+            );
             return true;
           }
         );
@@ -57,6 +61,10 @@ describe("Subscriptions", () => {
             await new_subscription.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["email"].message,
+              "email is required"
+            );
             return true;
           }
         );
@@ -71,6 +79,10 @@ describe("Subscriptions", () => {
             await new_subscription.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["email"].message,
+              `${test_subscription.email} is not a valid email!`
+            );
             return true;
           }
         );
@@ -87,6 +99,10 @@ describe("Subscriptions", () => {
             await new_subscription.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["plan_id"].message,
+              "plan_id is required"
+            );
             return true;
           }
         );
@@ -101,6 +117,10 @@ describe("Subscriptions", () => {
             await new_subscription.validate();
           },
           (err) => {
+            assert.strictEqual(
+              err.errors["plan_id"].message,
+              `Cast to ObjectId failed for value "${test_subscription.plan_id}" (type string) at path "plan_id" because of "BSONError"`
+            );
             return true;
           }
         );
@@ -118,6 +138,10 @@ describe("Subscriptions", () => {
               await new_subscription.validate();
             },
             (err) => {
+              assert.strictEqual(
+                err.errors["payment_platform.token"].message,
+                "token is required"
+              );
               return true;
             }
           );
@@ -132,12 +156,15 @@ describe("Subscriptions", () => {
               await new_subscription.validate();
             },
             (err) => {
+              assert.strictEqual(
+                err.errors["payment_platform.token"].message,
+                `maximum length allowed for token is 40. Got ${test_subscription.payment_platform.token}`
+              );
               return true;
             }
           );
         });
       });
-
       describe("external_id validation", () => {
         it("external_id should be required", async () => {
           delete test_subscription.payment_platform.external_id;
@@ -149,6 +176,10 @@ describe("Subscriptions", () => {
               await new_subscription.validate();
             },
             (err) => {
+              assert.strictEqual(
+                err.errors["payment_platform.external_id"].message,
+                "external_id is required"
+              );
               return true;
             }
           );
@@ -164,12 +195,15 @@ describe("Subscriptions", () => {
               await new_subscription.validate();
             },
             (err) => {
+              assert.strictEqual(
+                err.errors["payment_platform.external_id"].message,
+                `maximum length allowed for external_id is 40. Got ${test_subscription.payment_platform.external_id}`
+              );
               return true;
             }
           );
         });
       });
-
       describe("name validation", () => {
         it("name should be required", async () => {
           delete test_subscription.payment_platform.name;
@@ -181,6 +215,10 @@ describe("Subscriptions", () => {
               await new_subscription.validate();
             },
             (err) => {
+              assert.strictEqual(
+                err.errors["payment_platform.name"].message,
+                "name is required"
+              );
               return true;
             }
           );
@@ -195,6 +233,10 @@ describe("Subscriptions", () => {
               await new_subscription.validate();
             },
             (err) => {
+              assert.strictEqual(
+                err.errors["payment_platform.name"].message,
+                `${test_subscription.payment_platform.name} is not supported`
+              );
               return true;
             }
           );
