@@ -6,10 +6,14 @@ services:
     image: mongo:latest
     expose:
       - 27017
-    ports:
-      - "27017:27017"
+    # ports:
+    #   - "27017:27017"
   app:
     build: .
     restart: on-failure:3
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
     depends_on:
       - mongo
