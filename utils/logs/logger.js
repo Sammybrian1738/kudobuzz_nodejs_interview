@@ -6,7 +6,10 @@ winston.exceptions.handle(
 
 const logger = winston.createLogger({
   level: "info",
-  format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.json(),
+    winston.format.timestamp()
+  ),
   defaultMeta: {
     service: "kudobuzz-nodejs-interview",
     env: process.env.NODE_ENV,
