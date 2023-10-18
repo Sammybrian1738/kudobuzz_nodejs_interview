@@ -1,9 +1,7 @@
-process.env.NODE_ENV = "test";
-const initMongoDBConnection = require("../utils/db/mongodb");
-const { Plan } = require("../models/plan");
+const { Plan } = require("../../models/plan");
 const assert = require("assert");
-const { generateRandomString } = require("../utils/general");
-const { seedPlans } = require("../seeders/plan");
+const { generateRandomString } = require("../../utils/general");
+const { seedPlans } = require("../../seeders/plan");
 
 const test_plan = {
   name: "Platinum",
@@ -20,18 +18,9 @@ const test_plan = {
 };
 
 describe("Plans", () => {
-  before((done) => {
-    initMongoDBConnection()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
   describe("Model Initialisation", () => {
     it("it creates a mongoose Plan Model ", () => {
-      assert.ok(Plan, "Plan model created successfuuly");
+      assert.ok(Plan, "Plan model created successfully");
     });
   });
   describe("Schema Validation", () => {

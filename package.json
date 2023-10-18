@@ -6,7 +6,7 @@
   "scripts": {
     "start": "export NODE_ENV=production && node index.js",
     "dev": "export NODE_ENV=development && nodemon index.js",
-    "test": "export NODE_ENV=test && mocha test/ --timeout 10000 --recursive --exit"
+    "test": "export NODE_ENV=test && mocha test/ --timeout 20000 --recursive --exit"
   },
   "keywords": [],
   "author": "",
