@@ -30,12 +30,15 @@ async function main() {
     eventEmitter.once("seedGoldSubscriptions", () => {
       seedGoldSubscriptions();
     });
+
     eventEmitter.once("seedSilverSubscriptions", () => {
       seedSilverSubscriptions();
     });
+
     eventEmitter.once("seedBronzeSubscriptions", () => {
       seedBronzeSubscriptions();
     });
+
     eventEmitter.once("seedFreeSubscriptions", () => {
       seedFreeSubscriptions();
     });
