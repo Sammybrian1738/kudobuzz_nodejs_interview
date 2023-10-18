@@ -23,7 +23,9 @@ async function createSubscriptionCsv(subscriptions, fileName) {
       });
     }
 
-    stream.end();
+    setTimeout(() => {
+      stream.end();
+    }, 1500);
 
     stream.on("error", function (err) {
       reject(err);
