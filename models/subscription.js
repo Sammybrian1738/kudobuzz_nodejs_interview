@@ -1,17 +1,21 @@
 const mongoose = require("mongoose");
 
+const allowed_platform_name = ["Stripe", "Paypal"];
+
 const paymentPlatformSchema = new mongoose.Schema({
   token: {
     type: String,
     required: true,
+    maxlength: 40,
   },
   external_id: {
     type: String,
     required: true,
+    maxlength: 40,
   },
   name: {
     type: String,
-    enum: ["Stripe", "Paypal"],
+    enum: allowed_platform_name,
     required: true,
   },
 });
@@ -46,5 +50,5 @@ const Subscription = mongoose.model("Subscription", subscriptionSchema);
 
 module.exports = {
   Subscription,
-  validateSubscription,
+  allowed_platform_name,
 };
