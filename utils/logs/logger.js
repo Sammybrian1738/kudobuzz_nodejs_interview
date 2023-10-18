@@ -15,20 +15,10 @@ const logger = winston.createLogger({
     env: process.env.NODE_ENV,
   },
   transports: [
-    new winston.transports.File({
-      filename: "utils/logs/error.log",
-      level: "error",
-    }),
-    new winston.transports.File({ filename: "utils/logs/out.log" }),
-  ],
-});
-
-if (!["production", "test"].includes(process.env.NODE_ENV)) {
-  logger.add(
     new winston.transports.Console({
       format: winston.format.simple(),
-    })
-  );
-}
+    }),
+  ],
+});
 
 module.exports = logger;

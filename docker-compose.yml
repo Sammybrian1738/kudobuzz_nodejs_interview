@@ -1,0 +1,15 @@
+version: "3"
+services:
+  # MongoDB: https://hub.docker.com/_/mongo/
+  mongo:
+    restart: always
+    image: mongo:latest
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+  app:
+    build: .
+    restart: on-failure:3
+    depends_on:
+      - mongo
