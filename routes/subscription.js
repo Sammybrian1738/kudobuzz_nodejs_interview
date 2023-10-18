@@ -18,7 +18,9 @@ async function createSubscriptionCsv(subscriptions, fileName) {
       stream.write({
         business_id: subscriptions[i].business_id,
         email: subscriptions[i].email,
-        plan_id: subscriptions[i].plan_id,
+        plan_id: subscriptions[i].plan_id._id,
+        plan_name: subscriptions[i].plan_id.name,
+        plan_price: subscriptions[i].plan_id.price,
         payment_platform_name: subscriptions[i].payment_platform.name,
       });
     }
@@ -55,6 +57,7 @@ router.get("/", async (req, res, next) => {
     const subscriptions = await subscription_query
       .where("plan_id")
       .in(plan_ids)
+      .populate("plan_id")
       .limit(32500)
       .exec();
 
