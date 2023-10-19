@@ -24,8 +24,6 @@ async function main() {
 
     logger.info("Connected to MongoDB Successfully");
 
-    seedPlans();
-
     eventEmitter.once("seedPlatinumSubscriptions", () => {
       seedPlatinumSubscriptions();
     });
@@ -45,6 +43,8 @@ async function main() {
     eventEmitter.once("seedFreeSubscriptions", () => {
       seedFreeSubscriptions();
     });
+
+    seedPlans();
 
     // express
     const app = express();
