@@ -10,7 +10,6 @@ const {
   generateRandomPaymentPlatformExternalID,
   generateRandomPaymentPlatformName,
 } = require("../../utils/general");
-const { default: mongoose } = require("mongoose");
 
 const test_subscription = {
   business_id: generateRandomBusinessID(),
